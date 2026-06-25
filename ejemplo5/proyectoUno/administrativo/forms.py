@@ -52,7 +52,16 @@ class NumeroTelefonicoForm(ModelForm):
     class Meta:
         model = NumeroTelefonico
         fields = ['telefono', 'tipo', 'estudiante']
-
+        labels = {
+            'telefono': _('Ingrese telefono por favor'),
+            'tipo': _('Ingrese tipo por favor'),
+            'estudiante': _('Ingrese estudiante por favor'),
+        }
+    def clean_telefono(self):
+        valor = self.cleaned_data['telefono']
+        if not valor.startswith('099') or not valor.startswith('098') and len(valor) != 10:
+            raise forms.ValidationError("Ingrese un numero de telefono valido")
+        return valor
 
 class NumeroTelefonicoEstudianteForm(ModelForm):
 
@@ -65,3 +74,13 @@ class NumeroTelefonicoEstudianteForm(ModelForm):
     class Meta:
         model = NumeroTelefonico
         fields = ['telefono', 'tipo', 'estudiante']
+        labels = {
+            'telefono': _('Ingrese telefono por favor'),
+            'tipo': _('Ingrese tipo por favor'),
+            'estudiante': _('Ingrese estudiante por favor'),
+        }
+    def clean_telefono(self):
+        valor = self.cleaned_data['telefono']
+        if not valor.startswith('099') or not valor.startswith('098') and len(valor) != 10:
+            raise forms.ValidationError("Ingrese un numero de telefono valido")
+        return valor
