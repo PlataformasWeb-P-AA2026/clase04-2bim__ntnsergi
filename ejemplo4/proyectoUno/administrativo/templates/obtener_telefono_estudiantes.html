@@ -1,0 +1,38 @@
+{% extends "master.html" %}
+
+{% block title %}
+Lista de Teléfonos y Estudiantes
+{% endblock %}
+
+{% block content %}
+<h3>Lista de Teléfonos y Estudiantes</h3>
+<table id="tabla_telefono">
+    <thead>
+        <tr>
+            <th>Teléfono</th>
+            <th>Tipo</th>
+            <th>Operadora</th>
+            <th>Estudiante</th>
+            <th>Cédula del Estudiante</th>
+            <th>Editar telefono</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for telefono in telefonos %}
+        <tr>
+            <td>{{ telefono.telefono }}</td>
+            <td>{{ telefono.tipo }}</td>
+            <td>{{ telefono.obtener_operadora }}</td>
+            <td>{{ telefono.estudiante.nombre }} {{ telefono.estudiante.apellido }}</td>
+            <td>{{ telefono.estudiante.cedula }}</td>
+            <td><a href="{% url 'editar_numero_telefonico' telefono.id %}">editar</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#tabla_telefono').DataTable();
+    });
+</script>
+{% endblock %}
