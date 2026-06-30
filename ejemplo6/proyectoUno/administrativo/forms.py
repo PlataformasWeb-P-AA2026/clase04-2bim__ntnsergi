@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django import forms
 
 from administrativo.models import Estudiante, \
-        NumeroTelefonico
+        NumeroTelefonico, Comentario
 
 class EstudianteForm(ModelForm):
     class Meta:
@@ -71,3 +71,31 @@ class NumeroTelefonicoEstudianteForm(ModelForm):
     class Meta:
         model = NumeroTelefonico
         fields = ['telefono', 'tipo', 'estudiante']
+
+class ComentarioForm(ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ['username', 'correo', 'comentario']
+        labels = {
+            'username': _('Ingrese su usuario por favor'),
+            'correo': _('Ingrese su correo por favor'),
+            'comentario': _('Ingrese su comentario por favor'),
+        }
+
+        widgets ={
+            'comentario': forms.Textarea(attrs={
+                'rows':5,
+                'class':'form-control'
+            })
+        }
+    
+    def clean_comentario(self):
+        valor = self.cleaned_data['comentario']
+        num_palabras = len(valor.split())
+        if num_palabras < 25:
+            raise forms.ValidationError("Ingrese un comentario con al menos 25 palabras")
+        return valor
+
+
+
+        
