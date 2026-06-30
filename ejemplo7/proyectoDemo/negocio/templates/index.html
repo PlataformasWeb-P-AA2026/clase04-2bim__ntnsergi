@@ -1,12 +1,12 @@
 {% extends "master.html" %}
 
 {% block title %}
-  Listado de Restaurantes
+Listado de Restaurantes
 {% endblock %}
 
 {% block content %}
 <h2>Listado de Restaurantes
-<a href="{% url 'crear_restaurante' %}">+</a>
+  <a href="{% url 'crear_restaurante' %}">+</a>
 </h2>
 <h3>Número de restaurantes {{ numero }}</h3>
 
@@ -18,27 +18,31 @@
       <th>Tipo Cocina</th>
       <th>Capacidad</th>
       <th>Opciones</th>
+      <th>Comentarios</th>
     </tr>
   </thead>
-<tbody>
-  {% for e in restaurantes %}
-  <tr>
-    <td> {{e.nombre}}</td>
-    <td> {{e.tipo_cocina}}</td>
-    <td> {{e.capacidad_meses}}</td>
-    <td>
+  <tbody>
+    {% for e in restaurantes %}
+    <tr>
+      <td> {{e.nombre}}</td>
+      <td> {{e.tipo_cocina}}</td>
+      <td> {{e.capacidad_meses}}</td>
+      <td>
         <a href="{% url 'ver_restaurante' e.id %}">ver</a> <br>
         <a href="{% url 'editar_restaurante' e.id %}">editar</a> <br>
-    </td>
+      </td>
+      <td>
+        <a href="{% url 'crear_comentario' %}">Nuevo Comentario</a>
+      </td>
 
-  </tr>
-  {% endfor %}
+    </tr>
+    {% endfor %}
   </tbody>
 </table>
 
 <script type="text/javascript">
 
-  $(document).ready(function() {
+  $(document).ready(function () {
     $('#tabla_datos').DataTable({
       language: {
         url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
